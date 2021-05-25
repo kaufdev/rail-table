@@ -1,10 +1,20 @@
-package com.kaufdev.railtable.transfer;
+package com.kaufdev.railtable.transfer.business;
+
+import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
+import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
+import com.kaufdev.railtable.transfer.domain.Section;
+import com.kaufdev.railtable.transfer.domain.Transfer;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
 public class TransferAssembler {
     private final static BigDecimal SECOND_CLASS_FACTOR = BigDecimal.valueOf(0.5);
+    private final StationAssembler stationAssembler;
+
+    public TransferAssembler(StationAssembler stationAssembler) {
+        this.stationAssembler = stationAssembler;
+    }
 
     public TransferDto assemble(Transfer transfer, String startStationAcronym, String endStationAcronym){
         Optional<Section> startSectionOptional = transfer.getSections().stream().filter(section -> section.hasStartStationAcronym(startStationAcronym)).findFirst();
@@ -27,10 +37,8 @@ public class TransferAssembler {
 
             return new TransferDto(startSection.getStartTime(),
                     endSection.getEndTime(),
-                    startSection.getStartStation().getAcronym(),
-                    endSection.getEndStation().getAcronym(),
-                    startSection.getStartStation().getName(),
-                    endSection.getEndStation().getName(),
+                    stationAssembler.assembler(startSection.getStartStation()),
+                    stationAssembler.assembler(endSection.getEndStation()),
                     transfer.getOperator(),
                     firstClassCost,
                     secondClassCost);

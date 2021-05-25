@@ -1,4 +1,4 @@
-package com.kaufdev.railtable.transfer;
+package com.kaufdev.railtable.transfer.domain;
 
 public class Station {
     private String name;
