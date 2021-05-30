@@ -1,14 +1,36 @@
 package com.kaufdev.railtable.transfer.domain;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Section {
+    @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "START_STATION")
     private Station startStation;
+
+    @ManyToOne
+    @JoinColumn(name = "END_STATION")
     private Station endStation;
+
+    @OneToOne
+    @JoinColumn(name = "NEXT_SECTION")
+    private Section nextSection;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "TRANFER_ID", referencedColumnName = "id")
+    private Transfer transfer;
+
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int length;
-    private Section nextSection;
+
+    public Section() { //JPA related
+    }
 
     public Section(Station startStation, Station endStation, LocalDateTime startTime, LocalDateTime endTime, int length) {
         this.startStation = startStation;
@@ -57,5 +79,19 @@ public class Section {
 
     public boolean hasEndStationAcronym(String endStationAcronym) {
         return endStation.hasAcronym(endStationAcronym);
+    }
+
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", startStation=" + startStation +
+                ", endStation=" + endStation +
+                ", nextSection=" + nextSection +
+                ", transfer=" + transfer +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", length=" + length +
+                '}';
     }
 }
