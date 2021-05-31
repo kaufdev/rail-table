@@ -1,6 +1,5 @@
 package com.kaufdev.railtable.transfer.domain;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -47,9 +45,8 @@ class TransferRepositoryTest {
         Transfer transfer1 = new Transfer("INTERCITY",BigDecimal.ONE, Set.of(krk_waw));
         entityManager.persist(transfer1);
         entityManager.flush();
-        //TODO change name in saerchTransferDTo from station to stationAcronym
         //when
-        List<Transfer> transferFromDb = transferRepository.methodDo("KRK","WAW", TODAY.atTime(0,0));
+        List<Transfer> transferFromDb = transferRepository.findTransfers("KRK","WAW", TODAY.atTime(0,0));
         //then
         assertThat(transferFromDb).hasSize(1).extracting("sections").hasSize(1);
     }
@@ -63,7 +60,7 @@ class TransferRepositoryTest {
         entityManager.flush();
 
         //when
-        List<Transfer> transferFromDb = transferRepository.methodDo("WAW","HEL", TODAY.atTime(0,0));
+        List<Transfer> transferFromDb = transferRepository.findTransfers("WAW","HEL", TODAY.atTime(0,0));
         //then
         assertThat(transferFromDb).hasSize(1).flatExtracting("sections").hasSize(2);
     }
@@ -78,7 +75,7 @@ class TransferRepositoryTest {
         entityManager.flush();
 
         //when
-        List<Transfer> transferFromDb = transferRepository.methodDo("TOR","BYD", TODAY.atTime(0,0));
+        List<Transfer> transferFromDb = transferRepository.findTransfers("TOR","BYD", TODAY.atTime(0,0));
         //then
         assertThat(transferFromDb).isEmpty();
     }
@@ -93,7 +90,7 @@ class TransferRepositoryTest {
         entityManager.flush();
 
         //when
-        List<Transfer> transferFromDb = transferRepository.methodDo("WAW","HEL", TOMMOROW.atTime(0,0));
+        List<Transfer> transferFromDb = transferRepository.findTransfers("WAW","HEL", TOMMOROW.atTime(0,0));
         //then
         assertThat(transferFromDb).isEmpty();
     }

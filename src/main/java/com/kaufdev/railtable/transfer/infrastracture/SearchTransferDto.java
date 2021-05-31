@@ -1,13 +1,13 @@
 package com.kaufdev.railtable.transfer.infrastracture;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class SearchTransferDto {
     private final String stationFrom;
     private final String stationTo;
-    private final LocalDate outboundDate;
+    private final LocalDateTime outboundDate;
 
-    public SearchTransferDto(String stationFrom, String stationTo, LocalDate outboundDate) {
+    public SearchTransferDto(String stationFrom, String stationTo, LocalDateTime outboundDate) {
         this.stationFrom = stationFrom;
         this.stationTo = stationTo;
         this.outboundDate = outboundDate;
@@ -21,7 +21,7 @@ public class SearchTransferDto {
         return stationTo;
     }
 
-    public LocalDate getOutboundDate() {
+    public LocalDateTime getOutboundDate() {
         return outboundDate;
     }
 

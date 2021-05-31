@@ -4,10 +4,12 @@ import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
 import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.domain.Transfer;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Optional;
 
+@Component
 public class TransferAssembler {
     private final static BigDecimal SECOND_CLASS_FACTOR = BigDecimal.valueOf(0.5);
     private final StationAssembler stationAssembler;
