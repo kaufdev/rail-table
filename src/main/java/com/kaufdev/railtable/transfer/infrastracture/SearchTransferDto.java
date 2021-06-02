@@ -1,11 +1,16 @@
 package com.kaufdev.railtable.transfer.infrastracture;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDateTime;
 
 public class SearchTransferDto {
-    private final String stationFrom;
-    private final String stationTo;
-    private final LocalDateTime outboundDate;
+    private String stationFrom;
+    private String stationTo;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime outboundDate;
+
+    public SearchTransferDto() {//Jackson needed
+    }
 
     public SearchTransferDto(String stationFrom, String stationTo, LocalDateTime outboundDate) {
         this.stationFrom = stationFrom;

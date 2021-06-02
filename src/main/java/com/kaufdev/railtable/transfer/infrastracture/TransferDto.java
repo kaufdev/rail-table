@@ -49,6 +49,14 @@ public class TransferDto {
         return secondClassPrice;
     }
 
+    public StationDto getStartStation() {
+        return startStation;
+    }
+
+    public StationDto getEndStation() {
+        return endStation;
+    }
+
     @Override
     public String toString() {
         return "TransferDto{" +

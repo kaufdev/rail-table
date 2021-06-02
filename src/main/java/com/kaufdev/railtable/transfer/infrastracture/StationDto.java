@@ -13,6 +13,18 @@ public class StationDto {
         this.acronym = acronym;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getAcronym() {
+        return acronym;
+    }
+
     @Override
     public String toString() {
         return "StationDto{" +

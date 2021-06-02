@@ -21,8 +21,8 @@ public class Section {
     @JoinColumn(name = "NEXT_SECTION")
     private Section nextSection;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "TRANFER_ID", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "TRANFER_ID")
     private Transfer transfer;
 
     private LocalDateTime startTime;
@@ -73,6 +73,10 @@ public class Section {
         return length;
     }
 
+    public void setTransfer(Transfer transfer1) {
+        this.transfer = transfer1;
+    }
+
     public boolean hasStartStationAcronym(String startStationAcronym) {
         return startStation.hasAcronym(startStationAcronym);
     }
@@ -94,4 +98,5 @@ public class Section {
                 ", length=" + length +
                 '}';
     }
+
 }

@@ -45,6 +45,7 @@ class TransferControllerIT {
         entityManager.persist(waw);
         Section krk_waw = new Section(krk, waw, TODAY.atTime(1,1), TODAY.atTime(2, 1), 1);
         Transfer transfer1 = new Transfer("INTERCITY", BigDecimal.ONE, Set.of(krk_waw));
+        krk_waw.setTransfer(transfer1);
         entityManager.persist(transfer1);
         entityManager.flush();
         //todo change properties of dto to acronyms, change on UI needed too!

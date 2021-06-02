@@ -11,7 +11,8 @@ public class Transfer {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @OneToMany(targetEntity = Section.class, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "transfer", fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL)
     private Set<Section> sections;
 
     private String operator;
@@ -24,6 +25,11 @@ public class Transfer {
         this.operator = operator;
         this.lengthCostFactor = lengthCostFactor;
         this.sections = sections;
+    }
+
+    public Transfer(String operator, BigDecimal lengthCostFactor) {
+        this.operator = operator;
+        this.lengthCostFactor = lengthCostFactor;
     }
 
     public void setSections(Set<Section> sections) {

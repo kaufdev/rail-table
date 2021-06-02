@@ -42,8 +42,9 @@ class TransferRepositoryTest {
     public void shouldFindProperTransferByStartAndEndCityInOneSection(){
         //given
         Section krk_waw = new Section(krk, waw, TODAY.atTime(1,1), TODAY.atTime(2, 1), 1);
-        Transfer transfer1 = new Transfer("INTERCITY",BigDecimal.ONE, Set.of(krk_waw));
-        entityManager.persist(transfer1);
+        Transfer transfer = new Transfer("INTERCITY",BigDecimal.ONE, Set.of(krk_waw));
+        krk_waw.setTransfer(transfer);
+        entityManager.persist(transfer);
         entityManager.flush();
         //when
         List<Transfer> transferFromDb = transferRepository.findTransfers("KRK","WAW", TODAY.atTime(0,0));
@@ -53,10 +54,13 @@ class TransferRepositoryTest {
     @Test
     public void shouldFindProperTransferByStartAndEndCityInCoupleSection(){
         //given
+        Transfer transfer = new Transfer("INTERCITY",BigDecimal.ONE);
         Section waw_gds = new Section(waw, gds, TODAY.atTime(3,1), TODAY.atTime(4, 1), 1);
         Section gds_hel = new Section(gds, hel, TODAY.atTime(5,1), TODAY.atTime(6, 1), 1);
-        Transfer transfer1 = new Transfer("INTERCITY",BigDecimal.ONE, Set.of(waw_gds,gds_hel));
-        entityManager.persist(transfer1);
+        waw_gds.setTransfer(transfer);
+        gds_hel.setTransfer(transfer);
+        transfer.setSections(Set.of(waw_gds,gds_hel));
+        entityManager.persist(transfer);
         entityManager.flush();
 
         //when
