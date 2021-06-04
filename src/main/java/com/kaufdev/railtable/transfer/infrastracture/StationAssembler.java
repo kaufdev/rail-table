@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class StationAssembler {
-    public StationDto assembler(Station station){
+    public StationDto assemble(Station station){
         return new StationDto(station.getName(),station.getCity(),station.getAcronym());
     }
 }

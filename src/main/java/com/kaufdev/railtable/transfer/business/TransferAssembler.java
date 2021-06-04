@@ -39,8 +39,8 @@ public class TransferAssembler {
 
             return new TransferDto(startSection.getStartTime(),
                     endSection.getEndTime(),
-                    stationAssembler.assembler(startSection.getStartStation()),
-                    stationAssembler.assembler(endSection.getEndStation()),
+                    stationAssembler.assemble(startSection.getStartStation()),
+                    stationAssembler.assemble(endSection.getEndStation()),
                     transfer.getOperator(),
                     firstClassCost,
                     secondClassCost);
