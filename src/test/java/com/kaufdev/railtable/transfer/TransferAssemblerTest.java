@@ -7,13 +7,14 @@ import com.kaufdev.railtable.transfer.domain.Transfer;
 import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 import com.kaufdev.railtable.transfer.infrastracture.StationDto;
 import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Set;
 
+import static java.util.Collections.*;
 import static org.assertj.core.api.Assertions.*;
 
 class TransferAssemblerTest {
@@ -44,7 +45,8 @@ class TransferAssemblerTest {
                         new StationDto("Warszawa Centralna", "Warszawa", "WAWC"),
                         PKP_INTERCITY,
                         BigDecimal.valueOf(80),
-                        BigDecimal.valueOf(40.0)));
+                        BigDecimal.valueOf(40.0),
+                        emptyList()));
     }
 
     @Test
