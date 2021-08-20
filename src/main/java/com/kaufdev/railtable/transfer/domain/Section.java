@@ -99,4 +99,7 @@ public class Section {
                 '}';
     }
 
+    public Long getId() {
+        return this.id;
+    }
 }

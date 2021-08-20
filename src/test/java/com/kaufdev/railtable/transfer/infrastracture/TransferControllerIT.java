@@ -1,14 +1,13 @@
 package com.kaufdev.railtable.transfer.infrastracture;
 
-import com.kaufdev.railtable.transfer.domain.Section;
-import com.kaufdev.railtable.transfer.domain.Station;
-import com.kaufdev.railtable.transfer.domain.Transfer;
+import com.kaufdev.railtable.transfer.domain.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -30,10 +29,6 @@ class TransferControllerIT {
 
     @Autowired
     TransferController transferController;
-
-    @BeforeEach
-    void setUp() {
-    }
 
     @Test
     @Transactional

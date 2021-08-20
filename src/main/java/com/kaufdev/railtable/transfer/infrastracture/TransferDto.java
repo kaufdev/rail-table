@@ -10,7 +10,7 @@ public class TransferDto {
     private final LocalDateTime arrivalTime;
     private final StationDto startStation;
     private final StationDto endStation;
-    private final String operator;
+    private final String operator; //TODO Maciek - when thera are interchanges, temporary here is null.
     private final BigDecimal firstClassPrice;
     private final BigDecimal secondClassPrice;
     private final List<InterchangeTransferDto> interchangeTransfers;

@@ -12,7 +12,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.*;
@@ -29,6 +28,9 @@ class TransferServiceTest {
 
     @Mock
     TransferAssembler transferAssembler;
+
+    @Mock
+    InterchangeService interchangeService;
 
     @Test
     public void shouldReturnTransferDtosInAscOrderingRegardingArrivalTime(){
@@ -55,7 +57,7 @@ class TransferServiceTest {
                 .thenReturn(List.of(new Transfer(), new Transfer()));
         when(transferAssembler.assemble(any(),any(),any())).thenReturn(laterArrivedTransferDto,earlierArrivedTransferDto);
 
-        TransferService transferService = new TransferService(transferRepository, transferAssembler);
+        TransferService transferService = new TransferService(transferRepository, transferAssembler, interchangeService);
 
         //when
         List<TransferDto> transfers = transferService.findTransfers(new SearchTransferDto("krk", "waw", TODAY.atTime(0, 1)));
