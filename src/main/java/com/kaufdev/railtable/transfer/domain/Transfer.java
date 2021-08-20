@@ -47,4 +47,6 @@ public class Transfer {
     public String getOperator() {
         return operator;
     }
+
+    public Long getId(){return id;}
 }

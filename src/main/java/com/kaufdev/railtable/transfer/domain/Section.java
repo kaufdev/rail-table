@@ -40,6 +40,10 @@ public class Section {
         this.length = length;
     }
 
+    public Long getTransferId(){
+        return this.transfer.getId();
+    }
+
     public Section getNextSection(){
         return this.nextSection;
     }
@@ -99,4 +103,7 @@ public class Section {
                 '}';
     }
 
+    public Long getId() {
+        return this.id;
+    }
 }
