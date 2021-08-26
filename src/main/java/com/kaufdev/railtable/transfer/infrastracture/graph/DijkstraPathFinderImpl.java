@@ -3,30 +3,28 @@ package com.kaufdev.railtable.transfer.infrastracture.graph;
 import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 import com.kaufdev.railtable.transfer.domain.Section;
-import com.kaufdev.railtable.transfer.domain.SectionEdgeAssembler;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@Service
 public class DijkstraPathFinderImpl implements ShorterPathFinder {
 
-    @Override
-    public List<Section> getPath(Set<Section> allPossibleSections, String startStation, String endStation) {
+    private final Map<Long, Section> allPossibleSectionGroupedById;
+    private final MutableNetwork<String, SectionEdge> network = NetworkBuilder.undirected().build();
 
-        Map<Long, Section> sectionInTimeRangeMap = allPossibleSections.stream()
+    public DijkstraPathFinderImpl(Set<Section> allPossibleSections) {
+        allPossibleSectionGroupedById = allPossibleSections.stream()
                 .collect(Collectors.toMap(Section::getId, Function.identity()));
 
-        MutableNetwork<String, SectionEdge> network = NetworkBuilder.undirected().build();
-
-        sectionInTimeRangeMap.values().forEach(section ->{
+        allPossibleSectionGroupedById.values().forEach(section ->{
             network.addEdge(section.getStartStation().getAcronym(), section.getEndStation().getAcronym(), SectionEdgeAssembler.assemble(section));
         });
+    }
 
+    @Override
+    public List<Section> getPath(String startStation, String endStation) {
         Map<String, NodeWrapper> nodeWrappers = new HashMap<>();
         PriorityQueue<NodeWrapper> queue = new PriorityQueue<>();
         Set<String> nodesWithCalculatedTimeOfArrival = new HashSet<>();
@@ -40,7 +38,7 @@ public class DijkstraPathFinderImpl implements ShorterPathFinder {
             nodesWithCalculatedTimeOfArrival.add(node);
 
             if (node.equals(endStation)) {
-                return buildPath(nodeWrapper, sectionInTimeRangeMap);
+                return buildPath(nodeWrapper);
             }
 
             for (String neighbourStation : network.adjacentNodes(node)) {
@@ -64,10 +62,10 @@ public class DijkstraPathFinderImpl implements ShorterPathFinder {
         return Collections.emptyList();
     }
 
-    private static List<Section> buildPath(NodeWrapper nodeWrapper, Map<Long, Section> sectionInTimeRangeMap) {
+    private List<Section> buildPath(NodeWrapper nodeWrapper) {
         List<Section> path = new ArrayList<>();
         while (nodeWrapper != null && nodeWrapper.getPrevious() != null) {
-            path.add(sectionInTimeRangeMap.get(nodeWrapper.getSectionId()));
+            path.add(allPossibleSectionGroupedById.get(nodeWrapper.getSectionId()));
             nodeWrapper = nodeWrapper.getPrevious();
         }
         Collections.reverse(path);

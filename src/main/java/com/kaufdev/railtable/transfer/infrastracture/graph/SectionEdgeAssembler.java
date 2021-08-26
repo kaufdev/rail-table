@@ -1,5 +1,6 @@
-package com.kaufdev.railtable.transfer.domain;
+package com.kaufdev.railtable.transfer.infrastracture.graph;
 
+import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.infrastracture.graph.SectionEdge;
 import org.springframework.stereotype.Component;
 

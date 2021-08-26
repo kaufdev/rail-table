@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ShorterPathFinder {
-    List<Section> getPath(Set<Section> possibleSectionsForDay, String startStation, String endStation);
+    List<Section> getPath(String startStation, String endStation);
 }

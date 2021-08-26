@@ -29,9 +29,9 @@ class DijkstraPathFinderImplTest {
                 LocalDateTime.of(2000, 12, 1, 9, 0),
                 LocalDateTime.of(2000, 12, 1, 10, 0),
                 10);
-        DijkstraPathFinderImpl pathFinder = new DijkstraPathFinderImpl();
+        DijkstraPathFinderImpl pathFinder = new DijkstraPathFinderImpl(Set.of(waw_krk));
         //when
-        List<Section> sectionPath = pathFinder.getPath(Set.of(waw_krk), "WAW", "POZ");
+        List<Section> sectionPath = pathFinder.getPath("WAW", "POZ");
         //then
         Assertions.assertThat(sectionPath).isEmpty();
 
@@ -65,10 +65,10 @@ class DijkstraPathFinderImplTest {
         ReflectionTestUtils.setField(ldz_poz,"id",4L);
 
 
-        DijkstraPathFinderImpl pathFinder = new DijkstraPathFinderImpl();
+        DijkstraPathFinderImpl pathFinder = new DijkstraPathFinderImpl(Set.of(waw_krk,waw_poz,krk_ldz,ldz_poz));
 
         //when
-        List<Section> path = pathFinder.getPath(Set.of(waw_krk,waw_poz,krk_ldz,ldz_poz), "KRK", "POZ");
+        List<Section> path = pathFinder.getPath("KRK", "POZ");
 
         //then
         org.assertj.core.api.Assertions.assertThat(path).extracting("id").containsExactly(3L,4L);

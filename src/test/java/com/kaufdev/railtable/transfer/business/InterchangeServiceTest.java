@@ -34,7 +34,7 @@ class InterchangeServiceTest {
 
     @BeforeEach
     void setUp() {
-        interchangeService = new InterchangeService(new DijkstraPathFinderImpl(),sectionRepository,stationAssembler);
+        interchangeService = new InterchangeService(sectionRepository,stationAssembler);
     }
 
     @Test
