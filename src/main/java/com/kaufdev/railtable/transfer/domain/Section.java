@@ -91,6 +91,10 @@ public class Section {
         return endStation.hasAcronym(endStationAcronym);
     }
 
+    public Transfer getTransfer(){
+        return this.transfer;
+    }
+
     @Override
     public String toString() {
         return "Section{" +

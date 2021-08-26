@@ -8,6 +8,7 @@ import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 import com.kaufdev.railtable.transfer.infrastracture.StationDto;
 import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -30,9 +31,11 @@ class TransferAssemblerTest {
     @Test
     public void shouldReturnTransferFromOneSection(){
         //given
-        final Section krk_waw_section = new Section(KRAKOW_PODGORZE, WARSZAWA_CENTRALNA, TODAY.atTime(1, 20), TODAY.atTime(2, 20), 40)
+        Section krk_waw_section = new Section(KRAKOW_PODGORZE, WARSZAWA_CENTRALNA, TODAY.atTime(1, 20), TODAY.atTime(2, 20), 40)
                 .setNextSection(null);
-        final Transfer transfer = new Transfer(PKP_INTERCITY, BigDecimal.valueOf(2), Set.of(krk_waw_section));
+        Transfer transfer = new Transfer(PKP_INTERCITY, BigDecimal.valueOf(2), Set.of(krk_waw_section));
+        ReflectionTestUtils.setField(krk_waw_section,"transfer",transfer);
+
 
         //when
         TransferDto assembledTransferDto = transferAssembler.assemble(transfer, "KRKP", "WAWC");
@@ -52,10 +55,14 @@ class TransferAssemblerTest {
     @Test
     public void shouldReturnTransferFromCoupleSections(){
         //given
-        final Section gds_hel_section = new Section(GDANSK_GLOWNY, HEL, TODAY.atTime(5, 10), TODAY.atTime(9, 0), 30);
-        final Section waw_gds_section = new Section(WARSZAWA_CENTRALNA, GDANSK_GLOWNY, TODAY.atTime(2, 30), TODAY.atTime(5, 0), 200).setNextSection(gds_hel_section);
-        final Section krk_waw_section = new Section(KRAKOW_PODGORZE, WARSZAWA_CENTRALNA, TODAY.atTime(1, 20), TODAY.atTime(2, 20), 40).setNextSection(waw_gds_section);
-        final Transfer transferEntity = new Transfer(PKP_INTERCITY,BigDecimal.valueOf(4),Set.of(krk_waw_section,waw_gds_section, gds_hel_section));
+        Section gds_hel_section = new Section(GDANSK_GLOWNY, HEL, TODAY.atTime(5, 10), TODAY.atTime(9, 0), 30);
+        Section waw_gds_section = new Section(WARSZAWA_CENTRALNA, GDANSK_GLOWNY, TODAY.atTime(2, 30), TODAY.atTime(5, 0), 200).setNextSection(gds_hel_section);
+        Section krk_waw_section = new Section(KRAKOW_PODGORZE, WARSZAWA_CENTRALNA, TODAY.atTime(1, 20), TODAY.atTime(2, 20), 40).setNextSection(waw_gds_section);
+        Transfer transferEntity = new Transfer(PKP_INTERCITY,BigDecimal.valueOf(4),Set.of(krk_waw_section,waw_gds_section, gds_hel_section));
+
+        ReflectionTestUtils.setField(gds_hel_section,"transfer",transferEntity);
+        ReflectionTestUtils.setField(waw_gds_section,"transfer",transferEntity);
+        ReflectionTestUtils.setField(krk_waw_section,"transfer",transferEntity);
 
         //when
         TransferDto assembledTransferDto = transferAssembler.assemble(transferEntity, "KRKP", "HEL");

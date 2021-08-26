@@ -43,9 +43,9 @@ public class InterchangeService {
                 lastSection.getEndTime(),
                 StationAssembler.assemble(firstSection.getStartStation()),
                 StationAssembler.assemble(lastSection.getEndStation()),
-                null,
-                null,
-                null,
+                transferByInterchanges.getOperators(),
+                transferByInterchanges.getTotalFirstClassCost(),
+                transferByInterchanges.getTotalSecondClassCost(),
                 transferByInterchanges.getInterchanges()
         );
 

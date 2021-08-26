@@ -7,6 +7,7 @@ import com.kaufdev.railtable.transfer.domain.Station;
 import com.kaufdev.railtable.transfer.infrastracture.InterchangeTransferDto;
 import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -43,13 +44,30 @@ public class TransferByInterchanges {
         Section startingSection = sections.get(0);
         Section endingSection = sections.get(sections.size() - 1);
 
+        SectionTicketCost sectionTicketCost = new SectionTicketCost(startingSection, endingSection);
+
         return new InterchangeTransferDto(startingSection.getStartTime(),
                 endingSection.getEndTime(),
                 StationAssembler.assemble(startingSection.getStartStation()),
                 StationAssembler.assemble(endingSection.getEndStation()),
-                startingSection.getOperator());
+                startingSection.getOperator(),
+                sectionTicketCost.getFirstClassCost(),
+                sectionTicketCost.getSecondClassCost());
     }
 
 
     public List<InterchangeTransferDto> getInterchanges(){return this.interchanges;}
+
+    public String getOperators(){
+        List<String> operators = this.interchanges.stream().map(InterchangeTransferDto::getOperator).collect(Collectors.toList());
+        return String.join("+",operators);
+    }
+
+    public BigDecimal getTotalFirstClassCost(){
+        return this.interchanges.stream().map(InterchangeTransferDto::getFirstClassCost).reduce(BigDecimal.ZERO,BigDecimal::add);
+    }
+
+    public BigDecimal getTotalSecondClassCost(){
+        return this.interchanges.stream().map(InterchangeTransferDto::getFirstClassCost).reduce(BigDecimal.ZERO,BigDecimal::add);
+    }
 }
