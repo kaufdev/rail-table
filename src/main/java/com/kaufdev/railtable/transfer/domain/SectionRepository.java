@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface SectionRepository extends JpaRepository<Section, Long> {
@@ -14,6 +15,6 @@ public interface SectionRepository extends JpaRepository<Section, Long> {
     @Query("SELECT s from Section s " +
             "WHERE s.startTime >= :outboundTime " +
             "AND s.endTime <= :limitArrivalTime ")
-    List<Section> findSectionsInTimeRange(@Param("outboundTime") LocalDateTime outboundTime,
-                                          @Param("limitArrivalTime") LocalDateTime limitArrivalTime);
+    Set<Section> findSectionsInTimeRange(@Param("outboundTime") LocalDateTime outboundTime,
+                                         @Param("limitArrivalTime") LocalDateTime limitArrivalTime);
 }

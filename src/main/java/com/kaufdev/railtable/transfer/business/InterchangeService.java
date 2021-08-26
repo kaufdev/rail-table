@@ -24,28 +24,18 @@ import java.util.stream.Collectors;
 public class InterchangeService {
     private final ShorterPathFinder shorterPathFinder;
     private final SectionRepository sectionRepository;
-    private final SectionEdgeAssembler sectionEdgeAssembler;
     private final StationAssembler stationAssembler;
 
     @Autowired
-    public InterchangeService(ShorterPathFinder shorterPathFinder, SectionRepository sectionRepository, SectionEdgeAssembler sectionEdgeAssembler, StationAssembler stationAssembler) {
+    public InterchangeService(ShorterPathFinder shorterPathFinder, SectionRepository sectionRepository , StationAssembler stationAssembler) {
         this.shorterPathFinder = shorterPathFinder;
         this.sectionRepository = sectionRepository;
-        this.sectionEdgeAssembler = sectionEdgeAssembler;
         this.stationAssembler = stationAssembler;
     }
 
     public List<TransferDto> findTransfers(String stationFrom, String stationTo, LocalDateTime outboundDate) {
-        Map<Long, Section> sectionInTimeRangeMap = sectionRepository.findSectionsInTimeRange(outboundDate, outboundDate.plusDays(1L))
-                .stream().collect(Collectors.toMap(Section::getId, Function.identity()));
-        MutableNetwork<String, SectionEdge> network = NetworkBuilder.undirected().build();
-
-        sectionInTimeRangeMap.values().forEach(section ->{
-            network.addEdge(section.getStartStation().getAcronym(), section.getEndStation().getAcronym(), this.sectionEdgeAssembler.assemble(section));
-        });
-
-        List<Section> sectionPath = shorterPathFinder.getPath(network, stationFrom, stationTo).stream()
-                .map(sectionInTimeRangeMap::get).collect(Collectors.toList());
+        Set<Section> allPossibleSections = sectionRepository.findSectionsInTimeRange(outboundDate, outboundDate.plusDays(1L));
+        List<Section> sectionPath = shorterPathFinder.getPath(allPossibleSections, stationFrom, stationTo);
 
         if(sectionPath.isEmpty() || checkIfSectionsAreFromTheSameTransfer(sectionPath)){
             return Collections.emptyList();

@@ -1,7 +1,6 @@
 package com.kaufdev.railtable.transfer.business;
 
 import com.kaufdev.railtable.transfer.domain.Section;
-import com.kaufdev.railtable.transfer.domain.SectionEdgeAssembler;
 import com.kaufdev.railtable.transfer.domain.SectionRepository;
 import com.kaufdev.railtable.transfer.domain.Station;
 import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
@@ -16,6 +15,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -30,12 +30,11 @@ class InterchangeServiceTest {
     @Mock
     SectionRepository sectionRepository;
     InterchangeService interchangeService;
-    SectionEdgeAssembler sectionEdgeAssembler = new SectionEdgeAssembler();
     StationAssembler stationAssembler = new StationAssembler();
 
     @BeforeEach
     void setUp() {
-        interchangeService = new InterchangeService(new DijkstraPathFinderImpl(),sectionRepository,sectionEdgeAssembler,stationAssembler);
+        interchangeService = new InterchangeService(new DijkstraPathFinderImpl(),sectionRepository,stationAssembler);
     }
 
     @Test
@@ -44,7 +43,7 @@ class InterchangeServiceTest {
         Section krk_poz = new Section(KRK, POZ, TODAY, TODAY, 2);
         ReflectionTestUtils.setField(krk_poz,"id",1L);
         when(sectionRepository.findSectionsInTimeRange(eq(TODAY),eq(TODAY.plusDays(1L))))
-                .thenReturn(List.of(krk_poz));
+                .thenReturn(Set.of(krk_poz));
 
         //when
         List<TransferDto> transfers = interchangeService.findTransfers("KRK", "NYC", TODAY);
