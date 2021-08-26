@@ -2,32 +2,32 @@ package com.kaufdev.railtable.transfer.infrastracture.graph;
 
 import java.time.LocalDateTime;
 
-public class NodeWrapper implements Comparable<NodeWrapper>{
+class NodeWrapper implements Comparable<NodeWrapper>{
     private String node;
     private NodeWrapper previous;
     private LocalDateTime timeOfArrival;
     private Long lastSectionId;
 
-    public NodeWrapper(String node, NodeWrapper previous, LocalDateTime totalTimeInMinutes,Long lastSectionId) {
+    NodeWrapper(String node, NodeWrapper previous, LocalDateTime totalTimeInMinutes,Long lastSectionId) {
         this.node = node;
         this.previous = previous;
         this.timeOfArrival = totalTimeInMinutes;
         this.lastSectionId = lastSectionId;
     }
 
-    public String getNode() {
+    String getNode() {
         return node;
     }
 
-    public NodeWrapper getPrevious() {
+    NodeWrapper getPrevious() {
         return previous;
     }
 
-    public LocalDateTime getTimeOfArrival() {
+    LocalDateTime getTimeOfArrival() {
         return timeOfArrival;
     }
 
-    public void setPrevious(NodeWrapper previous){
+    void setPrevious(NodeWrapper previous){
         this.previous = previous;
     }
 
@@ -36,17 +36,17 @@ public class NodeWrapper implements Comparable<NodeWrapper>{
         return this.timeOfArrival.compareTo(o.getTimeOfArrival());
     }
 
-    public void setTimeOfArrival(LocalDateTime newTimeOfArrival) {
+    void setTimeOfArrival(LocalDateTime newTimeOfArrival) {
         this.timeOfArrival = newTimeOfArrival;
     }
 
-    public void update(NodeWrapper nodeWrapper, SectionEdge sectionEdge) {
+    void update(NodeWrapper nodeWrapper, SectionEdge sectionEdge) {
         this.timeOfArrival = sectionEdge.getEndTime();
         this.lastSectionId = sectionEdge.getId();
         this.previous = nodeWrapper;
     }
 
-    public Long getSectionId() {
+    Long getSectionId() {
         return this.lastSectionId;
     }
 }

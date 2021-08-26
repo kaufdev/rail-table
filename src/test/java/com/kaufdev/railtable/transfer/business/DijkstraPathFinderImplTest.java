@@ -4,7 +4,6 @@ import com.google.common.graph.MutableNetwork;
 import com.google.common.graph.NetworkBuilder;
 import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.domain.Station;
-import com.kaufdev.railtable.transfer.infrastracture.graph.SectionEdge;
 import com.kaufdev.railtable.transfer.infrastracture.graph.DijkstraPathFinderImpl;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
