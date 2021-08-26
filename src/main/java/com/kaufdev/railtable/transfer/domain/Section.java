@@ -44,6 +44,8 @@ public class Section {
         return this.transfer.getId();
     }
 
+    public String getOperator(){return this.transfer.getOperator();}
+
     public Section getNextSection(){
         return this.nextSection;
     }

@@ -25,7 +25,7 @@ class TransferAssemblerTest {
     private final LocalDate TODAY = LocalDate.of(2020,5,6);
     private final String PKP_INTERCITY = "PKP Intercity";
 
-    TransferAssembler transferAssembler = new TransferAssembler(new StationAssembler());
+    TransferAssembler transferAssembler = new TransferAssembler();
 
     @Test
     public void shouldReturnTransferFromOneSection(){

@@ -17,17 +17,15 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/station")
 public class StationController{
     private StationRepository stationRepository;
-    private StationAssembler stationAssembler;
 
     @Autowired
-    public StationController(StationRepository stationRepository, StationAssembler stationAssembler) {
+    public StationController(StationRepository stationRepository) {
         this.stationRepository = stationRepository;
-        this.stationAssembler = stationAssembler;
     }
 
     @GetMapping("/search")
     public List<StationDto> getStationsBy(@RequestParam String stationNameProposal){
         return stationRepository.findByNameStartsWithIgnoreCase(stationNameProposal).stream()
-                .map(stationAssembler::assemble).collect(Collectors.toList());
+                .map(StationAssembler::assemble).collect(Collectors.toList());
     }
 }

@@ -17,11 +17,6 @@ import static java.util.Collections.*;
 @Component
 public class TransferAssembler {
     private final static BigDecimal SECOND_CLASS_FACTOR = BigDecimal.valueOf(0.5);
-    private final StationAssembler stationAssembler;
-
-    public TransferAssembler(StationAssembler stationAssembler) {
-        this.stationAssembler = stationAssembler;
-    }
 
     public TransferDto assemble(Transfer transfer, String startStationAcronym, String endStationAcronym){
         Optional<Section> startSectionOptional = transfer.getSections().stream()
@@ -46,8 +41,8 @@ public class TransferAssembler {
 
             return new TransferDto(startSection.getStartTime(),
                     endSection.getEndTime(),
-                    stationAssembler.assemble(startSection.getStartStation()),
-                    stationAssembler.assemble(endSection.getEndStation()),
+                    StationAssembler.assemble(startSection.getStartStation()),
+                    StationAssembler.assemble(endSection.getEndStation()),
                     transfer.getOperator(),
                     firstClassCost,
                     secondClassCost,

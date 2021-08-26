@@ -30,11 +30,10 @@ class InterchangeServiceTest {
     @Mock
     SectionRepository sectionRepository;
     InterchangeService interchangeService;
-    StationAssembler stationAssembler = new StationAssembler();
 
     @BeforeEach
     void setUp() {
-        interchangeService = new InterchangeService(sectionRepository,stationAssembler);
+        interchangeService = new InterchangeService(sectionRepository);
     }
 
     @Test

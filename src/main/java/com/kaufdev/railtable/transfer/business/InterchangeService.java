@@ -2,6 +2,7 @@ package com.kaufdev.railtable.transfer.business;
 
 import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.domain.SectionRepository;
+import com.kaufdev.railtable.transfer.infrastracture.InterchangeTransferDto;
 import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
 import com.kaufdev.railtable.transfer.infrastracture.graph.DijkstraPathFinderImpl;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -18,20 +20,19 @@ import java.util.stream.Collectors;
 @Service
 public class InterchangeService {
     private final SectionRepository sectionRepository;
-    private final StationAssembler stationAssembler;
 
     @Autowired
-    public InterchangeService(SectionRepository sectionRepository , StationAssembler stationAssembler) {
+    public InterchangeService(SectionRepository sectionRepository) {
         this.sectionRepository = sectionRepository;
-        this.stationAssembler = stationAssembler;
     }
 
     public List<TransferDto> findTransfers(String stationFrom, String stationTo, LocalDateTime outboundDate) {
         Set<Section> allPossibleSections = sectionRepository.findSectionsInTimeRange(outboundDate, outboundDate.plusDays(1L));
         ShorterPathFinder pathFinder = new DijkstraPathFinderImpl(allPossibleSections);
         List<Section> sectionPath = pathFinder.getPath(stationFrom, stationTo);
+        TransferByInterchanges transferByInterchanges = new TransferByInterchanges(sectionPath);
 
-        if(sectionPath.isEmpty() || checkIfSectionsAreFromTheSameTransfer(sectionPath)){
+        if(sectionPath.size() < 2){//includes empty path and path with only one interchange, which is defacto transfer not interchange
             return Collections.emptyList();
         }
 
@@ -40,18 +41,14 @@ public class InterchangeService {
 
         TransferDto fastestTransferFromInterchanges = new TransferDto(firstSection.getStartTime(),
                 lastSection.getEndTime(),
-                stationAssembler.assemble(firstSection.getStartStation()),
-                stationAssembler.assemble(lastSection.getEndStation()),
+                StationAssembler.assemble(firstSection.getStartStation()),
+                StationAssembler.assemble(lastSection.getEndStation()),
                 null,
                 null,
                 null,
-                Collections.emptyList()
+                transferByInterchanges.getInterchanges()
         );
 
         return List.of(fastestTransferFromInterchanges);
-    }
-
-    private boolean checkIfSectionsAreFromTheSameTransfer(List<Section> sections){
-        return sections.stream().map(Section::getTransferId).collect(Collectors.toSet()).size() == 1;
     }
 }
