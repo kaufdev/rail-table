@@ -1,10 +1,9 @@
 package com.kaufdev.railtable.transfer.infrastracture;
 
-import com.kaufdev.railtable.transfer.domain.Station;
-
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Set;
 
 public class InterchangeTransferDto {
     private final StationDto startStation;
@@ -14,6 +13,7 @@ public class InterchangeTransferDto {
     private final String operator;
     private final BigDecimal firstClassCost;
     private final BigDecimal secondClassCost;
+    private final Set<Long> sectionsIds;
 
     public InterchangeTransferDto(
             LocalDateTime outboundTime,
@@ -22,7 +22,7 @@ public class InterchangeTransferDto {
             StationDto endStation,
             String operator,
             BigDecimal firstClassCost,
-            BigDecimal secondClassCost) {
+            BigDecimal secondClassCost, Set<Long> sectionsIds) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.outboundTime = outboundTime;
@@ -30,6 +30,11 @@ public class InterchangeTransferDto {
         this.operator = operator;
         this.firstClassCost = firstClassCost;
         this.secondClassCost = secondClassCost;
+        this.sectionsIds = sectionsIds;
+    }
+
+    public Set<Long> getSectionsIds() {
+        return sectionsIds;
     }
 
     public StationDto getStartStation() {
@@ -70,6 +75,7 @@ public class InterchangeTransferDto {
                 ", operator='" + operator + '\'' +
                 ", firstClassCost=" + firstClassCost +
                 ", secondClassCost=" + secondClassCost +
+                ", sectionsIds=" + sectionsIds +
                 '}';
     }
 
@@ -78,11 +84,11 @@ public class InterchangeTransferDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InterchangeTransferDto that = (InterchangeTransferDto) o;
-        return Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(operator, that.operator) && Objects.equals(firstClassCost, that.firstClassCost) && Objects.equals(secondClassCost, that.secondClassCost);
+        return Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(operator, that.operator) && Objects.equals(firstClassCost, that.firstClassCost) && Objects.equals(secondClassCost, that.secondClassCost) && Objects.equals(sectionsIds, that.sectionsIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startStation, endStation, outboundTime, arrivalTime, operator, firstClassCost, secondClassCost);
+        return Objects.hash(startStation, endStation, outboundTime, arrivalTime, operator, firstClassCost, secondClassCost, sectionsIds);
     }
 }

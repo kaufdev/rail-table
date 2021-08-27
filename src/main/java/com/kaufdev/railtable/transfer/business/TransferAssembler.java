@@ -1,15 +1,11 @@
 package com.kaufdev.railtable.transfer.business;
 
-import com.kaufdev.railtable.transfer.infrastracture.InterchangeTransferDto;
 import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
 import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.domain.Transfer;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 
 import static java.util.Collections.*;
@@ -25,16 +21,17 @@ public class TransferAssembler {
         if(startSectionOptional.isPresent() && endSectionOptional.isPresent()){
             final Section startSection = startSectionOptional.get();
             final Section endSection = endSectionOptional.get();
-            final SectionTicketCost sectionTicketCost = new SectionTicketCost(startSection, endSection);
+            final SectionCalculator sectionCalculator = new SectionCalculator(startSection, endSection);
 
             return new TransferDto(startSection.getStartTime(),
                     endSection.getEndTime(),
                     StationAssembler.assemble(startSection.getStartStation()),
                     StationAssembler.assemble(endSection.getEndStation()),
                     transfer.getOperator(),
-                    sectionTicketCost.getFirstClassCost(),
-                    sectionTicketCost.getSecondClassCost(),
-                    emptyList());
+                    sectionCalculator.getFirstClassCost(),
+                    sectionCalculator.getSecondClassCost(),
+                    emptyList(),
+                    sectionCalculator.getSectionsIds());
         }
 
         return null;

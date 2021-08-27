@@ -4,7 +4,6 @@ import com.kaufdev.railtable.transfer.business.TransferAssembler;
 import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.domain.Station;
 import com.kaufdev.railtable.transfer.domain.Transfer;
-import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 import com.kaufdev.railtable.transfer.infrastracture.StationDto;
 import com.kaufdev.railtable.transfer.infrastracture.TransferDto;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Collections;
 import java.util.Set;
 
 import static java.util.Collections.*;
@@ -33,6 +31,7 @@ class TransferAssemblerTest {
         //given
         Section krk_waw_section = new Section(KRAKOW_PODGORZE, WARSZAWA_CENTRALNA, TODAY.atTime(1, 20), TODAY.atTime(2, 20), 40)
                 .setNextSection(null);
+        ReflectionTestUtils.setField(krk_waw_section,"id",1L);
         Transfer transfer = new Transfer(PKP_INTERCITY, BigDecimal.valueOf(2), Set.of(krk_waw_section));
         ReflectionTestUtils.setField(krk_waw_section,"transfer",transfer);
 
@@ -49,7 +48,8 @@ class TransferAssemblerTest {
                         PKP_INTERCITY,
                         BigDecimal.valueOf(80),
                         BigDecimal.valueOf(40.0),
-                        emptyList()));
+                        emptyList(),
+                        Set.of(krk_waw_section.getId())));
     }
 
     @Test

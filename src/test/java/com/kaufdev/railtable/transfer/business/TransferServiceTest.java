@@ -12,6 +12,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.List;
 
 import static java.util.Collections.*;
@@ -42,7 +43,7 @@ class TransferServiceTest {
                 "Intercity",
                 BigDecimal.valueOf(80),
                 BigDecimal.valueOf(40.0),
-                emptyList());
+                emptyList(), Collections.emptySet());
 
         TransferDto laterArrivedTransferDto = new TransferDto(TODAY.atTime(1, 20),
                 TODAY.atTime(18, 20),
@@ -51,7 +52,7 @@ class TransferServiceTest {
                 "Intercity",
                 BigDecimal.valueOf(80),
                 BigDecimal.valueOf(40.0),
-                emptyList());
+                emptyList(), Collections.emptySet());
 
         when(transferRepository.findTransfers(any(), any(), any()))
                 .thenReturn(List.of(new Transfer(), new Transfer()));

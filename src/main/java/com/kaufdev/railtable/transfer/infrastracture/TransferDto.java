@@ -4,17 +4,18 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class TransferDto {
     private final LocalDateTime outboundTime;
     private final LocalDateTime arrivalTime;
     private final StationDto startStation;
     private final StationDto endStation;
-    private final String operator; //TODO Maciek - when thera are interchanges, temporary here is null.
+    private final String operator;
     private final BigDecimal firstClassPrice;
     private final BigDecimal secondClassPrice;
     private final List<InterchangeTransferDto> interchangeTransfers;
-
+    private final Set<Long> sectionsIds;
 
     public TransferDto(LocalDateTime outboundTime,
                        LocalDateTime arrivalTime,
@@ -23,7 +24,7 @@ public class TransferDto {
                        String operator,
                        BigDecimal firstClassPrice,
                        BigDecimal secondClassPrice,
-                       List<InterchangeTransferDto> interchangeTransfers) {
+                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds) {
         this.outboundTime = outboundTime;
         this.arrivalTime = arrivalTime;
         this.startStation = startStation;
@@ -32,6 +33,7 @@ public class TransferDto {
         this.firstClassPrice = firstClassPrice;
         this.secondClassPrice = secondClassPrice;
         this.interchangeTransfers = interchangeTransfers;
+        this.sectionsIds = sectionsIds;
     }
 
     public List<InterchangeTransferDto> getInterchangeTransfers() {
@@ -66,17 +68,8 @@ public class TransferDto {
         return endStation;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TransferDto that = (TransferDto) o;
-        return Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers);
+    public Set<Long> getSectionsIds() {
+        return sectionsIds;
     }
 
     @Override
@@ -90,6 +83,20 @@ public class TransferDto {
                 ", firstClassPrice=" + firstClassPrice +
                 ", secondClassPrice=" + secondClassPrice +
                 ", interchangeTransfers=" + interchangeTransfers +
+                ", sectionsIds=" + sectionsIds +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TransferDto that = (TransferDto) o;
+        return Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds);
     }
 }
