@@ -49,7 +49,9 @@ class TransferAssemblerTest {
                         BigDecimal.valueOf(80),
                         BigDecimal.valueOf(40.0),
                         emptyList(),
-                        Set.of(krk_waw_section.getId())));
+                        Set.of(krk_waw_section.getId()),
+                        0,
+                        0));
     }
 
     @Test

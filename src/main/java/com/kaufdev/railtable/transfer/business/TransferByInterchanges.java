@@ -6,10 +6,7 @@ import com.kaufdev.railtable.transfer.infrastracture.InterchangeTransferDto;
 import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 
 import java.math.BigDecimal;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 
@@ -53,12 +50,14 @@ public class TransferByInterchanges {
 
         return new InterchangeTransferDto(startingSection.getStartTime(),
                 endingSection.getEndTime(),
-                StationAssembler.assemble(startingSection.getStartStation()),
-                StationAssembler.assemble(endingSection.getEndStation()),
+                startingSection.getStartStationName(),
+                endingSection.getEndStationName(),
                 startingSection.getOperator(),
                 sectionCalculator.getFirstClassCost(),
                 sectionCalculator.getSecondClassCost(),
-                sectionCalculator.getSectionsIds());
+                sectionCalculator.getSectionsIds(),
+                sectionCalculator.getAllSeats(),
+                sectionCalculator.getTakenSeats());
     }
 
 
@@ -75,5 +74,13 @@ public class TransferByInterchanges {
 
     public BigDecimal getTotalSecondClassCost(){
         return this.interchanges.stream().map(InterchangeTransferDto::getFirstClassCost).reduce(BigDecimal.ZERO,BigDecimal::add);
+    }
+
+    public int getSmallestAllSeats(){
+        return  this.interchanges.stream().map(InterchangeTransferDto::getAllSeats).min(Integer::compareTo).orElse(0);
+    }
+
+    public int getHighestTakenSeats(){
+        return this.interchanges.stream().map(InterchangeTransferDto::getTakenSeats).max(Integer::compareTo).orElse(0);
     }
 }

@@ -16,6 +16,8 @@ public class TransferDto {
     private final BigDecimal secondClassPrice;
     private final List<InterchangeTransferDto> interchangeTransfers;
     private final Set<Long> sectionsIds;
+    private final int allSeats;
+    private final int takenSeats;
 
     public TransferDto(LocalDateTime outboundTime,
                        LocalDateTime arrivalTime,
@@ -24,7 +26,7 @@ public class TransferDto {
                        String operator,
                        BigDecimal firstClassPrice,
                        BigDecimal secondClassPrice,
-                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds) {
+                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds, int allSeats, int takenSeats) {
         this.outboundTime = outboundTime;
         this.arrivalTime = arrivalTime;
         this.startStation = startStation;
@@ -34,6 +36,16 @@ public class TransferDto {
         this.secondClassPrice = secondClassPrice;
         this.interchangeTransfers = interchangeTransfers;
         this.sectionsIds = sectionsIds;
+        this.allSeats = allSeats;
+        this.takenSeats = takenSeats;
+    }
+
+    public int getAllSeats() {
+        return allSeats;
+    }
+
+    public int getTakenSeats() {
+        return takenSeats;
     }
 
     public List<InterchangeTransferDto> getInterchangeTransfers() {
@@ -84,6 +96,8 @@ public class TransferDto {
                 ", secondClassPrice=" + secondClassPrice +
                 ", interchangeTransfers=" + interchangeTransfers +
                 ", sectionsIds=" + sectionsIds +
+                ", allSeats=" + allSeats +
+                ", takenSeats=" + takenSeats +
                 '}';
     }
 
@@ -92,11 +106,11 @@ public class TransferDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransferDto that = (TransferDto) o;
-        return Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
+        return allSeats == that.allSeats && takenSeats == that.takenSeats && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds);
+        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds, allSeats, takenSeats);
     }
 }

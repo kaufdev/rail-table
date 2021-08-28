@@ -31,7 +31,9 @@ public class TransferAssembler {
                     sectionCalculator.getFirstClassCost(),
                     sectionCalculator.getSecondClassCost(),
                     emptyList(),
-                    sectionCalculator.getSectionsIds());
+                    sectionCalculator.getSectionsIds(),
+                    sectionCalculator.getAllSeats(),
+                    sectionCalculator.getTakenSeats());
         }
 
         return null;
