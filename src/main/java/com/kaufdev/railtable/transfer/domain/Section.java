@@ -1,7 +1,12 @@
 package com.kaufdev.railtable.transfer.domain;
 
+import com.kaufdev.railtable.order.Ticket;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Section {
@@ -25,6 +30,11 @@ public class Section {
     @JoinColumn(name = "TRANFER_ID")
     private Transfer transfer;
 
+    @ManyToMany(mappedBy = "boughtSections")
+    private Set<Ticket> tickets = new HashSet<>();
+
+    private int takenSeats;
+    private int allSeats;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int length;
@@ -38,6 +48,47 @@ public class Section {
         this.startTime = startTime;
         this.endTime = endTime;
         this.length = length;
+    }
+
+    public boolean isEmptySeatPossible(){
+        return takenSeats < allSeats;
+    }
+
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", startStation=" + startStation +
+                ", endStation=" + endStation +
+                ", nextSection=" + nextSection +
+                ", transfer=" + transfer +
+                ", takenSeats=" + takenSeats +
+                ", allSeats=" + allSeats +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", length=" + length +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Section section = (Section) o;
+        return takenSeats == section.takenSeats && allSeats == section.allSeats && length == section.length && Objects.equals(id, section.id) && Objects.equals(startStation, section.startStation) && Objects.equals(endStation, section.endStation) && Objects.equals(nextSection, section.nextSection) && Objects.equals(transfer, section.transfer) && Objects.equals(startTime, section.startTime) && Objects.equals(endTime, section.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startStation, endStation, nextSection, transfer, takenSeats, allSeats, startTime, endTime, length);
+    }
+
+    public int getTakenSeats() {
+        return takenSeats;
+    }
+
+    public int getAllSeats() {
+        return allSeats;
     }
 
     public Long getTransferId(){
@@ -95,21 +146,11 @@ public class Section {
         return this.transfer;
     }
 
-    @Override
-    public String toString() {
-        return "Section{" +
-                "id=" + id +
-                ", startStation=" + startStation +
-                ", endStation=" + endStation +
-                ", nextSection=" + nextSection +
-                ", transfer=" + transfer +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", length=" + length +
-                '}';
-    }
-
     public Long getId() {
         return this.id;
+    }
+
+    public void takeSeat() {
+        takenSeats++;
     }
 }
