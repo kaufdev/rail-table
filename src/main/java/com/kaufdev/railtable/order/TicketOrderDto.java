@@ -17,6 +17,9 @@ public class TicketOrderDto {
     private String email;
     @NotNull
     private BigDecimal price;
+    @NotNull
+    private String ticketType;
+
 
     public TicketOrderDto() {
     }
@@ -65,4 +68,7 @@ public class TicketOrderDto {
         return email;
     }
 
+    public String getTicketType() {
+        return ticketType;
+    }
 }

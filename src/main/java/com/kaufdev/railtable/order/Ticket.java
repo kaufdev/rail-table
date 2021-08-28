@@ -1,8 +1,6 @@
 package com.kaufdev.railtable.order;
 
 import com.kaufdev.railtable.transfer.domain.Section;
-import com.kaufdev.railtable.transfer.domain.Station;
-import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -28,13 +26,15 @@ public class Ticket {
     private String lastName;
     private String email;
     private BigDecimal price;
+    private String ticketType;
 
-    public Ticket(Set<Section> boughtSections, String firstName, String lastName, String email, BigDecimal price) {
+    public Ticket(Set<Section> boughtSections, String firstName, String lastName, String email, BigDecimal price, String ticketType) {
         this.boughtSections = boughtSections;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.price = price;
+        this.ticketType = ticketType;
     }
 
     public Ticket() {
@@ -63,5 +63,9 @@ public class Ticket {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getTicketType() {
+        return this.ticketType;
     }
 }

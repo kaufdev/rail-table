@@ -31,7 +31,7 @@ public class OrderService {
 
         ticketSections.forEach(Section::takeSeat);
 
-        Ticket ticketToCreate = new Ticket(ticketSections, dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPrice());
+        Ticket ticketToCreate = new Ticket(ticketSections, dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPrice(), dto.getTicketType());
 
         return ticketRepository.save(ticketToCreate);
     }

@@ -39,6 +39,7 @@ public class OrderController {
                 .setEmail(ticket.getEmail())
                 .setTransfers(ticketTransfers)
                 .setPrice(ticket.getPrice())
+                .setTicketType(ticket.getTicketType())
                 .build();
     }
 }

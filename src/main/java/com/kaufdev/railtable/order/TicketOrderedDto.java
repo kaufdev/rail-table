@@ -9,14 +9,20 @@ public class TicketOrderedDto {
     private final String lastName;
     private final String email;
     private final Long price;
+    private final String ticketType;
 
 
-    private TicketOrderedDto(List<TicketTransferDto> transfers, String firstName, String lastName, String email, Long price) {
+    private TicketOrderedDto(List<TicketTransferDto> transfers, String firstName, String lastName, String email, Long price, String ticketType) {
         this.transfers = transfers;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.price = price;
+        this.ticketType =ticketType;
+    }
+
+    public String getTicketType() {
+        return ticketType;
     }
 
     public Long getPrice() {
@@ -45,6 +51,7 @@ public class TicketOrderedDto {
         private String lastName;
         private String email;
         private Long price;
+        private String ticketType;
 
         public Builder setTransfers(List<TicketTransferDto> transfers) {
             this.transfers = transfers;
@@ -71,8 +78,15 @@ public class TicketOrderedDto {
             return this;
         }
 
-        public TicketOrderedDto build(){
-            return new TicketOrderedDto(transfers,firstName,lastName,email, price);
+        public Builder setTicketType(String ticketType) {
+            this.ticketType = ticketType;
+            return this;
         }
+
+        public TicketOrderedDto build(){
+            return new TicketOrderedDto(transfers,firstName,lastName,email, price, ticketType);
+        }
+
+
     }
 }
