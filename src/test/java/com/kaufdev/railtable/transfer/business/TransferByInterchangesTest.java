@@ -69,8 +69,8 @@ class TransferByInterchangesTest {
         //when
         assertThat(subject.getInterchanges()).hasSize(1)
                 .flatExtracting("startStation","endStation","outboundTime","arrivalTime","firstClassCost","secondClassCost")
-                .containsExactly(StationAssembler.assemble(KRK_STATION),
-                        StationAssembler.assemble(LIZ_STATION),
+                .containsExactly(KRK_STATION.getName(),
+                        LIZ_STATION.getName(),
                         expectedStartingTime,
                         expectedEndingTime,
                         BigDecimal.valueOf(900),
