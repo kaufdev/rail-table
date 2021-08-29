@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 public class Ticket {
@@ -21,7 +22,7 @@ public class Ticket {
             inverseJoinColumns = { @JoinColumn(name = "SECTION_ID") }
     )
     private Set<Section> boughtSections = new HashSet<>();
-
+    private String uuid;
     private String firstName;
     private String lastName;
     private String email;
@@ -35,6 +36,7 @@ public class Ticket {
         this.email = email;
         this.price = price;
         this.ticketType = ticketType;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     public Ticket() {
@@ -67,5 +69,9 @@ public class Ticket {
 
     public String getTicketType() {
         return this.ticketType;
+    }
+
+    public String getUuid() {
+        return this.uuid;
     }
 }

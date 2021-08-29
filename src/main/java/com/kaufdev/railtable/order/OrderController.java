@@ -40,6 +40,7 @@ public class OrderController {
                 .setTransfers(ticketTransfers)
                 .setPrice(ticket.getPrice())
                 .setTicketType(ticket.getTicketType())
+                .setIdentifier(ticket.getUuid())
                 .build();
     }
 }
