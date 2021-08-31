@@ -16,8 +16,8 @@ public class TransferDto {
     private final BigDecimal secondClassPrice;
     private final List<InterchangeTransferDto> interchangeTransfers;
     private final Set<Long> sectionsIds;
-    private final int allSeats;
-    private final int availableSeats;
+    private final int allSeatsForSecondClass;
+    private final int availableSeatsForSecondClass;
 
     public TransferDto(LocalDateTime outboundTime,
                        LocalDateTime arrivalTime,
@@ -26,7 +26,7 @@ public class TransferDto {
                        String operator,
                        BigDecimal firstClassPrice,
                        BigDecimal secondClassPrice,
-                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds, int allSeats, int availableSeats) {
+                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds, int allSeatsForSecondClass, int availableSeatsForSecondClass) {
         this.outboundTime = outboundTime;
         this.arrivalTime = arrivalTime;
         this.startStation = startStation;
@@ -36,16 +36,16 @@ public class TransferDto {
         this.secondClassPrice = secondClassPrice;
         this.interchangeTransfers = interchangeTransfers;
         this.sectionsIds = sectionsIds;
-        this.allSeats = allSeats;
-        this.availableSeats = availableSeats;
+        this.allSeatsForSecondClass = allSeatsForSecondClass;
+        this.availableSeatsForSecondClass = availableSeatsForSecondClass;
     }
 
-    public int getAllSeats() {
-        return allSeats;
+    public int getAllSeatsForSecondClass() {
+        return allSeatsForSecondClass;
     }
 
-    public int getAvailableSeats() {
-        return availableSeats;
+    public int getAvailableSeatsForSecondClass() {
+        return availableSeatsForSecondClass;
     }
 
     public List<InterchangeTransferDto> getInterchangeTransfers() {
@@ -96,8 +96,8 @@ public class TransferDto {
                 ", secondClassPrice=" + secondClassPrice +
                 ", interchangeTransfers=" + interchangeTransfers +
                 ", sectionsIds=" + sectionsIds +
-                ", allSeats=" + allSeats +
-                ", availableSeats=" + availableSeats +
+                ", allSeatsForSecondClass=" + allSeatsForSecondClass +
+                ", availableSeatsForSecondClass=" + availableSeatsForSecondClass +
                 '}';
     }
 
@@ -106,11 +106,11 @@ public class TransferDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransferDto that = (TransferDto) o;
-        return allSeats == that.allSeats && availableSeats == that.availableSeats && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
+        return allSeatsForSecondClass == that.allSeatsForSecondClass && availableSeatsForSecondClass == that.availableSeatsForSecondClass && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds, allSeats, availableSeats);
+        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds, allSeatsForSecondClass, availableSeatsForSecondClass);
     }
 }

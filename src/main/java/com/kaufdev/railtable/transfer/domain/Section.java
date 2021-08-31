@@ -35,8 +35,8 @@ public class Section {
 
 
 
-    private int availableSeats;
-    private int allSeats;
+    private int availableSeatsForSecondClass;
+    private int allSeatsForSecondClass;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
     private int length;
@@ -52,16 +52,16 @@ public class Section {
         this.length = length;
     }
 
-    public boolean isEmptySeatPossible(){
-        return availableSeats > 0;
+    public boolean isEmptySeatPossibleForSecondClass(){
+        return availableSeatsForSecondClass > 0;
     }
 
-    public int getAvailableSeats() {
-        return availableSeats;
+    public int getAvailableSeatsForSecondClass() {
+        return availableSeatsForSecondClass;
     }
 
-    public int getAllSeats() {
-        return allSeats;
+    public int getAllSeatsForSecondClass() {
+        return allSeatsForSecondClass;
     }
 
     public Long getTransferId(){
@@ -124,7 +124,7 @@ public class Section {
     }
 
     public void takeSeat() {
-        availableSeats--;
+        availableSeatsForSecondClass--;
     }
 
     @Override
@@ -136,8 +136,8 @@ public class Section {
                 ", nextSection=" + nextSection +
                 ", transfer=" + transfer +
                 ", tickets=" + tickets +
-                ", availableSeats=" + availableSeats +
-                ", allSeats=" + allSeats +
+                ", availableSeats=" + availableSeatsForSecondClass +
+                ", allSeatsForSecondClass=" + allSeatsForSecondClass +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
                 ", length=" + length +
@@ -149,11 +149,11 @@ public class Section {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Section section = (Section) o;
-        return availableSeats == section.availableSeats && allSeats == section.allSeats && length == section.length && Objects.equals(id, section.id) && Objects.equals(startStation, section.startStation) && Objects.equals(endStation, section.endStation) && Objects.equals(nextSection, section.nextSection) && Objects.equals(transfer, section.transfer) && Objects.equals(tickets, section.tickets) && Objects.equals(startTime, section.startTime) && Objects.equals(endTime, section.endTime);
+        return availableSeatsForSecondClass == section.availableSeatsForSecondClass && allSeatsForSecondClass == section.allSeatsForSecondClass && length == section.length && Objects.equals(id, section.id) && Objects.equals(startStation, section.startStation) && Objects.equals(endStation, section.endStation) && Objects.equals(nextSection, section.nextSection) && Objects.equals(transfer, section.transfer) && Objects.equals(tickets, section.tickets) && Objects.equals(startTime, section.startTime) && Objects.equals(endTime, section.endTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, startStation, endStation, nextSection, transfer, tickets, availableSeats, allSeats, startTime, endTime, length);
+        return Objects.hash(id, startStation, endStation, nextSection, transfer, tickets, availableSeatsForSecondClass, allSeatsForSecondClass, startTime, endTime, length);
     }
 }

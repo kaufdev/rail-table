@@ -37,14 +37,14 @@ public class OrderService {
     }
 
     private void validateSeats(Set<Section> sections) {
-        Set<Section> sectionWithoutAvailableSeats = sections.stream()
-                .filter(section -> !section.isEmptySeatPossible())
+        Set<Section> sectionWithoutAvailableSeatsForSecondClass = sections.stream()
+                .filter(section -> !section.isEmptySeatPossibleForSecondClass())
                 .collect(Collectors.toSet());
 
-        if (!sectionWithoutAvailableSeats.isEmpty()) {
+        if (!sectionWithoutAvailableSeatsForSecondClass.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             sb.append("No available seats ");
-            List<String> betweens = sectionWithoutAvailableSeats.stream()
+            List<String> betweens = sectionWithoutAvailableSeatsForSecondClass.stream()
                     .map(section -> "between " + section.getStartStationName() + " and " + section.getEndStationName())
                     .collect(Collectors.toList());
             sb.append(String.join(" and ", betweens));

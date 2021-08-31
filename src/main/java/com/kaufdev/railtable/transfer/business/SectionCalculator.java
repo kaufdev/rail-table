@@ -14,7 +14,7 @@ public class SectionCalculator {
     private final BigDecimal secondClassCost;
     private final Set<Long> sectionsIds;
     private final int smallestSeatCapacity;
-    private final int smallestAvailableSeatNumber;
+    private final int smallestAvailableSeatNumberForSecondClass;
 
     public SectionCalculator(Section startingSection, Section endingSection) {
         final Transfer transfer = startingSection.getTransfer();
@@ -22,17 +22,17 @@ public class SectionCalculator {
         Section currentSection = startingSection;
         Set<Long> sectionIdsUnderConstructions = new HashSet<>();
         int currentAllSeats = MAXIMUM_CAR_CAPACITY;
-        int currentAvailableSeats = MAXIMUM_CAR_CAPACITY;
+        int currentAvailableSeatsForSecondClass = MAXIMUM_CAR_CAPACITY;
 
         while(currentSection != null){
             length = length + currentSection.getLength();
 
-            if(currentSection.getAllSeats() < currentAllSeats){
-                currentAllSeats = currentSection.getAllSeats();
+            if(currentSection.getAllSeatsForSecondClass() < currentAllSeats){
+                currentAllSeats = currentSection.getAllSeatsForSecondClass();
             }
 
-            if(currentSection.getAvailableSeats() < currentAvailableSeats){
-                currentAvailableSeats = currentSection.getAvailableSeats();
+            if(currentSection.getAvailableSeatsForSecondClass() < currentAvailableSeatsForSecondClass){
+                currentAvailableSeatsForSecondClass = currentSection.getAvailableSeatsForSecondClass();
             }
 
             sectionIdsUnderConstructions.add(currentSection.getId());
@@ -43,7 +43,7 @@ public class SectionCalculator {
         firstClassCost = transfer.getLengthCostFactor().multiply(BigDecimal.valueOf(length));
         secondClassCost = SECOND_CLASS_FACTOR.multiply(firstClassCost);
         sectionsIds = sectionIdsUnderConstructions;
-        smallestAvailableSeatNumber = currentAvailableSeats;
+        smallestAvailableSeatNumberForSecondClass = currentAvailableSeatsForSecondClass;
         smallestSeatCapacity = currentAllSeats;
     }
 
@@ -59,11 +59,11 @@ public class SectionCalculator {
         return this.sectionsIds;
     }
 
-    public int getAvailableSeats(){
-        return this.smallestAvailableSeatNumber;
+    public int getAvailableSeatsForSecondClass(){
+        return this.smallestAvailableSeatNumberForSecondClass;
     }
 
-    public int getAllSeats(){
+    public int getAllSeatsForSecondClass(){
         return this.smallestSeatCapacity;
     }
 }
