@@ -27,20 +27,37 @@ public class OrderService {
         Set<Section> ticketSections = dto.getSectionsIds().stream()
                 .map(sectionRepository::findById).map(Optional::get).collect(Collectors.toSet());
 
-        validateSeats(ticketSections);
+        validateSeats(ticketSections, dto.getTicketType());
 
-        ticketSections.forEach(Section::takeSeat);
+        if ("First Class".equals(dto.getTicketType())) {
+            ticketSections.forEach(Section::takeSeatForFirstClass);
+        } else {
+            ticketSections.forEach(Section::takeSeatForSecondClass);
+        }
 
         Ticket ticketToCreate = new Ticket(ticketSections, dto.getFirstName(), dto.getLastName(), dto.getEmail(), dto.getPrice(), dto.getTicketType());
 
         return ticketRepository.save(ticketToCreate);
     }
 
-    private void validateSeats(Set<Section> sections) {
-        Set<Section> sectionWithoutAvailableSeatsForSecondClass = sections.stream()
-                .filter(section -> !section.isEmptySeatPossibleForSecondClass())
-                .collect(Collectors.toSet());
+    private void validateSeats(Set<Section> sections, String ticketType) {
+        final Set<Section> sectionWithoutAvailableSeatsForSecondClass = getSectionWithoutSeats(sections, ticketType);
+        handleSectionWithoutAvailableSeats(sectionWithoutAvailableSeatsForSecondClass);
+    }
 
+    private Set<Section> getSectionWithoutSeats(Set<Section> sections, String ticketType) {
+        if ("First Class".equals(ticketType)) {
+            return sections.stream()
+                    .filter(section -> !section.isEmptySeatPossibleForFirstClass())
+                    .collect(Collectors.toSet());
+        } else {
+            return sections.stream()
+                    .filter(section -> !section.isEmptySeatPossibleForSecondClass())
+                    .collect(Collectors.toSet());
+        }
+    }
+
+    private void handleSectionWithoutAvailableSeats(Set<Section> sectionWithoutAvailableSeatsForSecondClass) {
         if (!sectionWithoutAvailableSeatsForSecondClass.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             sb.append("No available seats ");

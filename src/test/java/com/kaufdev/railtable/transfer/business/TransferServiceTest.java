@@ -43,7 +43,7 @@ class TransferServiceTest {
                 "Intercity",
                 BigDecimal.valueOf(80),
                 BigDecimal.valueOf(40.0),
-                emptyList(), Collections.emptySet(), 0, 0);
+                emptyList(), Collections.emptySet(), 0, 0, 0, 0);
 
         TransferDto laterArrivedTransferDto = new TransferDto(TODAY.atTime(1, 20),
                 TODAY.atTime(18, 20),
@@ -52,7 +52,7 @@ class TransferServiceTest {
                 "Intercity",
                 BigDecimal.valueOf(80),
                 BigDecimal.valueOf(40.0),
-                emptyList(), Collections.emptySet(), 0, 0);
+                emptyList(), Collections.emptySet(), 0, 0, 0, 0);
 
         when(transferRepository.findTransfers(any(), any(), any()))
                 .thenReturn(List.of(new Transfer(), new Transfer()));

@@ -56,7 +56,9 @@ public class TransferByInterchanges {
                 sectionCalculator.getSecondClassCost(),
                 sectionCalculator.getSectionsIds(),
                 sectionCalculator.getAllSeatsForSecondClass(),
-                sectionCalculator.getAvailableSeatsForSecondClass());
+                sectionCalculator.getAvailableSeatsForSecondClass(),
+                sectionCalculator.getAllSeatsForFirstClass(),
+                sectionCalculator.getAvailableSeatsForFirstClass());
     }
 
 
@@ -81,5 +83,13 @@ public class TransferByInterchanges {
 
     public int getSmallestAvailableSeatsForSecondClass(){
         return this.interchanges.stream().map(InterchangeTransferDto::getAvailableSeatsForSecondClass).min(Integer::compareTo).orElse(0);
+    }
+
+    public int getSmallestAllSeatsForFirstClass(){
+        return  this.interchanges.stream().map(InterchangeTransferDto::getAllSeatsForFirstClass).min(Integer::compareTo).orElse(0);
+    }
+
+    public int getSmallestAvailableSeatsForFirstClass(){
+        return this.interchanges.stream().map(InterchangeTransferDto::getAvailableSeatsForFirstClass).min(Integer::compareTo).orElse(0);
     }
 }

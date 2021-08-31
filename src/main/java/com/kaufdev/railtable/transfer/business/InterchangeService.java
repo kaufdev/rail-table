@@ -46,7 +46,9 @@ public class InterchangeService {
                 transferByInterchanges.getInterchanges(),
                 transferByInterchanges.getAllSectionIds(),
                 transferByInterchanges.getSmallestAllSeatsForSecondClass(),
-                transferByInterchanges.getSmallestAvailableSeatsForSecondClass());
+                transferByInterchanges.getSmallestAvailableSeatsForSecondClass(),
+                transferByInterchanges.getSmallestAllSeatsForFirstClass(),
+                transferByInterchanges.getSmallestAvailableSeatsForFirstClass());
 
         return List.of(fastestTransferFromInterchanges);
     }

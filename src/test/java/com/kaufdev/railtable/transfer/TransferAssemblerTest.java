@@ -51,7 +51,7 @@ class TransferAssemblerTest {
                         emptyList(),
                         Set.of(krk_waw_section.getId()),
                         0,
-                        0));
+                        0, 0, 0));
     }
 
     @Test

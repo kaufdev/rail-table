@@ -18,6 +18,8 @@ public class TransferDto {
     private final Set<Long> sectionsIds;
     private final int allSeatsForSecondClass;
     private final int availableSeatsForSecondClass;
+    private final int allSeatsForFirstClass;
+    private final int availableSeatsForFirstClass;
 
     public TransferDto(LocalDateTime outboundTime,
                        LocalDateTime arrivalTime,
@@ -26,7 +28,7 @@ public class TransferDto {
                        String operator,
                        BigDecimal firstClassPrice,
                        BigDecimal secondClassPrice,
-                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds, int allSeatsForSecondClass, int availableSeatsForSecondClass) {
+                       List<InterchangeTransferDto> interchangeTransfers, Set<Long> sectionsIds, int allSeatsForSecondClass, int availableSeatsForSecondClass, int allSeatsForFirstClass, int availableSeatsForFirstClass) {
         this.outboundTime = outboundTime;
         this.arrivalTime = arrivalTime;
         this.startStation = startStation;
@@ -38,6 +40,8 @@ public class TransferDto {
         this.sectionsIds = sectionsIds;
         this.allSeatsForSecondClass = allSeatsForSecondClass;
         this.availableSeatsForSecondClass = availableSeatsForSecondClass;
+        this.allSeatsForFirstClass = allSeatsForFirstClass;
+        this.availableSeatsForFirstClass = availableSeatsForFirstClass;
     }
 
     public int getAllSeatsForSecondClass() {
@@ -84,6 +88,14 @@ public class TransferDto {
         return sectionsIds;
     }
 
+    public int getAllSeatsForFirstClass() {
+        return allSeatsForFirstClass;
+    }
+
+    public int getAvailableSeatsForFirstClass() {
+        return availableSeatsForFirstClass;
+    }
+
     @Override
     public String toString() {
         return "TransferDto{" +
@@ -98,6 +110,8 @@ public class TransferDto {
                 ", sectionsIds=" + sectionsIds +
                 ", allSeatsForSecondClass=" + allSeatsForSecondClass +
                 ", availableSeatsForSecondClass=" + availableSeatsForSecondClass +
+                ", allSeatsForFirstClass=" + allSeatsForFirstClass +
+                ", availableSeatsForFirstClass=" + availableSeatsForFirstClass +
                 '}';
     }
 
@@ -106,11 +120,12 @@ public class TransferDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         TransferDto that = (TransferDto) o;
-        return allSeatsForSecondClass == that.allSeatsForSecondClass && availableSeatsForSecondClass == that.availableSeatsForSecondClass && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
+        return allSeatsForSecondClass == that.allSeatsForSecondClass && availableSeatsForSecondClass == that.availableSeatsForSecondClass && allSeatsForFirstClass == that.allSeatsForFirstClass && availableSeatsForFirstClass == that.availableSeatsForFirstClass && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(operator, that.operator) && Objects.equals(firstClassPrice, that.firstClassPrice) && Objects.equals(secondClassPrice, that.secondClassPrice) && Objects.equals(interchangeTransfers, that.interchangeTransfers) && Objects.equals(sectionsIds, that.sectionsIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds, allSeatsForSecondClass, availableSeatsForSecondClass);
+        return Objects.hash(outboundTime, arrivalTime, startStation, endStation, operator, firstClassPrice, secondClassPrice, interchangeTransfers, sectionsIds, allSeatsForSecondClass, availableSeatsForSecondClass, allSeatsForFirstClass, availableSeatsForFirstClass);
     }
+
 }
