@@ -24,23 +24,6 @@ public class OrderController {
     @PostMapping("/ticket")
     public TicketOrderedDto orderTicket(@RequestBody TicketOrderDto ticketOrderDto) {
         final Ticket ticket = orderService.orderTicket(ticketOrderDto);
-        final List<TicketTransferDto> ticketTransfers = ticket.getBoughtSections().stream()
-                .map(section -> new TicketTransferDto(section.getStartStationName(),
-                        section.getEndStationName(),
-                        section.getStartTime(),
-                        section.getEndTime(),
-                        section.getOperator()))
-                .sorted()
-                .collect(Collectors.toList());
-
-        return new TicketOrderedDto.Builder()
-                .setFirstName(ticket.getFirstName())
-                .setLastName(ticket.getLastName())
-                .setEmail(ticket.getEmail())
-                .setTransfers(ticketTransfers)
-                .setPrice(ticket.getPrice())
-                .setTicketType(ticket.getTicketType())
-                .setIdentifier(ticket.getUuid())
-                .build();
+        return TicketAssembler.assemble(ticket);
     }
 }
