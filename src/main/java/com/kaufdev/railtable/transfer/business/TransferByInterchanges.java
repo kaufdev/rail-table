@@ -3,7 +3,6 @@ package com.kaufdev.railtable.transfer.business;
 import com.google.common.collect.ArrayListMultimap;
 import com.kaufdev.railtable.transfer.domain.Section;
 import com.kaufdev.railtable.transfer.infrastracture.InterchangeTransferDto;
-import com.kaufdev.railtable.transfer.infrastracture.StationAssembler;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -57,7 +56,7 @@ public class TransferByInterchanges {
                 sectionCalculator.getSecondClassCost(),
                 sectionCalculator.getSectionsIds(),
                 sectionCalculator.getAllSeats(),
-                sectionCalculator.getTakenSeats());
+                sectionCalculator.getAvailableSeats());
     }
 
 
@@ -80,7 +79,7 @@ public class TransferByInterchanges {
         return  this.interchanges.stream().map(InterchangeTransferDto::getAllSeats).min(Integer::compareTo).orElse(0);
     }
 
-    public int getHighestTakenSeats(){
-        return this.interchanges.stream().map(InterchangeTransferDto::getTakenSeats).max(Integer::compareTo).orElse(0);
+    public int getSmallestAvailableSeats(){
+        return this.interchanges.stream().map(InterchangeTransferDto::getAvailableSeats).min(Integer::compareTo).orElse(0);
     }
 }

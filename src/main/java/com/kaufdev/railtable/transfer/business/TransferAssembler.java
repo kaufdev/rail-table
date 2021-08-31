@@ -33,7 +33,7 @@ public class TransferAssembler {
                     emptyList(),
                     sectionCalculator.getSectionsIds(),
                     sectionCalculator.getAllSeats(),
-                    sectionCalculator.getTakenSeats());
+                    sectionCalculator.getAvailableSeats());
         }
 
         return null;

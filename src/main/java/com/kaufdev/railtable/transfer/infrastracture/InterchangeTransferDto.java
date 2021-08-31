@@ -15,7 +15,7 @@ public class InterchangeTransferDto {
     private final BigDecimal secondClassCost;
     private final Set<Long> sectionsIds;
     private final int allSeats;
-    private final int takenSeats;
+    private final int availableSeats;
 
     @Override
     public String toString() {
@@ -29,7 +29,7 @@ public class InterchangeTransferDto {
                 ", secondClassCost=" + secondClassCost +
                 ", sectionsIds=" + sectionsIds +
                 ", allSeats=" + allSeats +
-                ", takenSeats=" + takenSeats +
+                ", availableSeats=" + availableSeats +
                 '}';
     }
 
@@ -38,20 +38,20 @@ public class InterchangeTransferDto {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         InterchangeTransferDto that = (InterchangeTransferDto) o;
-        return allSeats == that.allSeats && takenSeats == that.takenSeats && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(operator, that.operator) && Objects.equals(firstClassCost, that.firstClassCost) && Objects.equals(secondClassCost, that.secondClassCost) && Objects.equals(sectionsIds, that.sectionsIds);
+        return allSeats == that.allSeats && availableSeats == that.availableSeats && Objects.equals(startStation, that.startStation) && Objects.equals(endStation, that.endStation) && Objects.equals(outboundTime, that.outboundTime) && Objects.equals(arrivalTime, that.arrivalTime) && Objects.equals(operator, that.operator) && Objects.equals(firstClassCost, that.firstClassCost) && Objects.equals(secondClassCost, that.secondClassCost) && Objects.equals(sectionsIds, that.sectionsIds);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(startStation, endStation, outboundTime, arrivalTime, operator, firstClassCost, secondClassCost, sectionsIds, allSeats, takenSeats);
+        return Objects.hash(startStation, endStation, outboundTime, arrivalTime, operator, firstClassCost, secondClassCost, sectionsIds, allSeats, availableSeats);
     }
 
     public int getAllSeats() {
         return allSeats;
     }
 
-    public int getTakenSeats() {
-        return takenSeats;
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 
     public InterchangeTransferDto(
@@ -61,7 +61,7 @@ public class InterchangeTransferDto {
             String endStation,
             String operator,
             BigDecimal firstClassCost,
-            BigDecimal secondClassCost, Set<Long> sectionsIds, int allSeats, int takenSeats) {
+            BigDecimal secondClassCost, Set<Long> sectionsIds, int allSeats, int availableSeats) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.outboundTime = outboundTime;
@@ -71,7 +71,7 @@ public class InterchangeTransferDto {
         this.secondClassCost = secondClassCost;
         this.sectionsIds = sectionsIds;
         this.allSeats = allSeats;
-        this.takenSeats = takenSeats;
+        this.availableSeats = availableSeats;
     }
 
     public Set<Long> getSectionsIds() {

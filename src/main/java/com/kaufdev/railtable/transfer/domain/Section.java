@@ -33,7 +33,9 @@ public class Section {
     @ManyToMany(mappedBy = "boughtSections")
     private Set<Ticket> tickets = new HashSet<>();
 
-    private int takenSeats;
+
+
+    private int availableSeats;
     private int allSeats;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
@@ -51,40 +53,11 @@ public class Section {
     }
 
     public boolean isEmptySeatPossible(){
-        return takenSeats < allSeats;
+        return availableSeats > 0;
     }
 
-    @Override
-    public String toString() {
-        return "Section{" +
-                "id=" + id +
-                ", startStation=" + startStation +
-                ", endStation=" + endStation +
-                ", nextSection=" + nextSection +
-                ", transfer=" + transfer +
-                ", takenSeats=" + takenSeats +
-                ", allSeats=" + allSeats +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", length=" + length +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Section section = (Section) o;
-        return takenSeats == section.takenSeats && allSeats == section.allSeats && length == section.length && Objects.equals(id, section.id) && Objects.equals(startStation, section.startStation) && Objects.equals(endStation, section.endStation) && Objects.equals(nextSection, section.nextSection) && Objects.equals(transfer, section.transfer) && Objects.equals(startTime, section.startTime) && Objects.equals(endTime, section.endTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, startStation, endStation, nextSection, transfer, takenSeats, allSeats, startTime, endTime, length);
-    }
-
-    public int getTakenSeats() {
-        return takenSeats;
+    public int getAvailableSeats() {
+        return availableSeats;
     }
 
     public int getAllSeats() {
@@ -151,6 +124,36 @@ public class Section {
     }
 
     public void takeSeat() {
-        takenSeats++;
+        availableSeats--;
+    }
+
+    @Override
+    public String toString() {
+        return "Section{" +
+                "id=" + id +
+                ", startStation=" + startStation +
+                ", endStation=" + endStation +
+                ", nextSection=" + nextSection +
+                ", transfer=" + transfer +
+                ", tickets=" + tickets +
+                ", availableSeats=" + availableSeats +
+                ", allSeats=" + allSeats +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", length=" + length +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Section section = (Section) o;
+        return availableSeats == section.availableSeats && allSeats == section.allSeats && length == section.length && Objects.equals(id, section.id) && Objects.equals(startStation, section.startStation) && Objects.equals(endStation, section.endStation) && Objects.equals(nextSection, section.nextSection) && Objects.equals(transfer, section.transfer) && Objects.equals(tickets, section.tickets) && Objects.equals(startTime, section.startTime) && Objects.equals(endTime, section.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, startStation, endStation, nextSection, transfer, tickets, availableSeats, allSeats, startTime, endTime, length);
     }
 }

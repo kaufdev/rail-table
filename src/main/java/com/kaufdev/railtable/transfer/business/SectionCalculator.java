@@ -14,7 +14,7 @@ public class SectionCalculator {
     private final BigDecimal secondClassCost;
     private final Set<Long> sectionsIds;
     private final int smallestSeatCapacity;
-    private final int highestTakenSeatNumber;
+    private final int smallestAvailableSeatNumber;
 
     public SectionCalculator(Section startingSection, Section endingSection) {
         final Transfer transfer = startingSection.getTransfer();
@@ -22,7 +22,7 @@ public class SectionCalculator {
         Section currentSection = startingSection;
         Set<Long> sectionIdsUnderConstructions = new HashSet<>();
         int currentAllSeats = MAXIMUM_CAR_CAPACITY;
-        int currentTakenSeats = 0;
+        int currentAvailableSeats = MAXIMUM_CAR_CAPACITY;
 
         while(currentSection != null){
             length = length + currentSection.getLength();
@@ -31,8 +31,8 @@ public class SectionCalculator {
                 currentAllSeats = currentSection.getAllSeats();
             }
 
-            if(currentSection.getTakenSeats() > currentTakenSeats){
-                currentTakenSeats = currentSection.getTakenSeats();
+            if(currentSection.getAvailableSeats() < currentAvailableSeats){
+                currentAvailableSeats = currentSection.getAvailableSeats();
             }
 
             sectionIdsUnderConstructions.add(currentSection.getId());
@@ -43,7 +43,7 @@ public class SectionCalculator {
         firstClassCost = transfer.getLengthCostFactor().multiply(BigDecimal.valueOf(length));
         secondClassCost = SECOND_CLASS_FACTOR.multiply(firstClassCost);
         sectionsIds = sectionIdsUnderConstructions;
-        highestTakenSeatNumber = currentTakenSeats;
+        smallestAvailableSeatNumber = currentAvailableSeats;
         smallestSeatCapacity = currentAllSeats;
     }
 
@@ -59,8 +59,8 @@ public class SectionCalculator {
         return this.sectionsIds;
     }
 
-    public int getTakenSeats(){
-        return this.highestTakenSeatNumber;
+    public int getAvailableSeats(){
+        return this.smallestAvailableSeatNumber;
     }
 
     public int getAllSeats(){
