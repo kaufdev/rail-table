@@ -42,7 +42,13 @@ public class OrderService {
                 .collect(Collectors.toSet());
 
         if (!sectionWithoutAvailableSeats.isEmpty()) {
-            throw new IllegalArgumentException("No available seats");
+            StringBuilder sb = new StringBuilder();
+            sb.append("No available seats ");
+            List<String> betweens = sectionWithoutAvailableSeats.stream()
+                    .map(section -> "between " + section.getStartStationName() + " and " + section.getEndStationName())
+                    .collect(Collectors.toList());
+            sb.append(String.join(" and ", betweens));
+            throw new IllegalArgumentException(sb.toString());
         }
     }
 }
